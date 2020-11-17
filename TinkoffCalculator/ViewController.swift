@@ -130,11 +130,13 @@ class ViewController: UIViewController {
         try calculationHistory.forEach { calculationHistoryItem in
             switch calculationHistoryItem {
             case .number(let number):
-                if let operation = lastOperation {
-                    result = try operation.calculate(result, number)
-                } else {
+                guard let operation = lastOperation else {
                     result = number
+                    
+                    return
                 }
+                
+                result = try operation.calculate(result, number)
                 
             case .operation(let operation):
                 lastOperation = operation
