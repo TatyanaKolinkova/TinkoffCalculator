@@ -12,11 +12,11 @@ enum CalculationError: Error {
     case dividedByZero
 }
 
-enum Operation {
-    case add
-    case substract
-    case multiply
-    case divide
+enum Operation: String {
+    case add = "+"
+    case substract = "-"
+    case multiply = "x"
+    case divide = "/"
     
     func calculate(_ number1: Double, _ number2: Double) throws -> Double {
         switch self {
@@ -52,17 +52,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        label.text = "0"
+        resetLabelText()
     }
+    
+    lazy var numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        
+        numberFormatter.usesGroupingSeparator = false
+        numberFormatter.locale = Locale(identifier: "ru_RU")
+        numberFormatter.numberStyle = .decimal
+        
+        return numberFormatter
+    }()
     
     @IBOutlet var label: UILabel!
     
     @IBAction func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
         
-        print(buttonText)
+        if buttonText == "," && label.text?.contains(",") == true {
+            return
+        }
         
-        if let labelText = label.text, labelText == "0" {
+        if label.text == "0" {
             label.text = buttonText
         } else {
             label.text?.append(buttonText)
@@ -72,44 +84,38 @@ class ViewController: UIViewController {
     @IBAction func operationButtonPressed(_ sender: UIButton) {
         guard
             let buttonText = sender.currentTitle,
-            let labelText = label.text,
-            let labelNumber = formatNumber(labelText)
+            let buttonOperation = Operation(rawValue: buttonText)
             else { return }
         
-        var operation: Operation
-        
-        switch buttonText {
-        case "+":
-            operation = .add
-        case "-":
-            operation = .substract
-        case "x":
-            operation = .multiply
-        case "/":
-            operation = .divide
-        default:
-            return
-        }
-        
-        calculationHistory.append(.number(labelNumber))
-        calculationHistory.append(.operation(operation))
-        
-        label.text = "0"
-    }
-    
-    @IBAction func resultButtonPressed(_ sender: UIButton) {
         guard
             let labelText = label.text,
-            let labelNumber = formatNumber(labelText)
+            let labelNumber = numberFormatter.number(from: labelText)?.doubleValue
+            else { return }
+        
+        calculationHistory.append(.number(labelNumber))
+        calculationHistory.append(.operation(buttonOperation))
+        
+        resetLabelText()
+    }
+    
+    @IBAction func clearButtonPressed() {
+        calculationHistory.removeAll()
+        
+        resetLabelText()
+    }
+    
+    @IBAction func calculateButtonPressed() {
+        guard
+            let labelText = label.text,
+            let labelNumber = numberFormatter.number(from: labelText)?.doubleValue
             else { return }
         
         calculationHistory.append(.number(labelNumber))
         
         do {
-            let result = try calculateResult()
-            let labelText = formatNumber(result)
+            let result = try calculate()
             
-            label.text = labelText
+            label.text = numberFormatter.string(from: NSNumber(value: result))
         } catch {
             label.text = "Ошибка"
         }
@@ -117,49 +123,24 @@ class ViewController: UIViewController {
         calculationHistory.removeAll()
     }
     
-    @IBAction func clearButtonPressed(_ sender: UIButton) {
-        calculationHistory.removeAll()
+    func calculate() throws -> Double {
+        guard case .number(let firstNumber) = calculationHistory[0] else { return 0 }
         
-        label.text = "0"
-    }
-    
-    func calculateResult() throws -> Double {
-        var result: Double = 0
-        var lastOperation: Operation?
+        var currentResult = firstNumber
         
-        try calculationHistory.forEach { calculationHistoryItem in
-            switch calculationHistoryItem {
-            case .number(let number):
-                guard let operation = lastOperation else {
-                    result = number
-                    
-                    return
-                }
-                
-                result = try operation.calculate(result, number)
-                
-            case .operation(let operation):
-                lastOperation = operation
-            }
+        for index in stride(from: 1, to: calculationHistory.count - 1, by: 2) {
+            guard
+                case .operation(let operation) = calculationHistory[index],
+                case .number(let number) = calculationHistory[index + 1]
+                else { break }
+            
+            currentResult = try operation.calculate(currentResult, number)
         }
         
-        return result
+        return currentResult
     }
     
-    func formatNumber(_ number: String) -> Double? {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.numberStyle = .decimal
-        
-        return formatter.number(from: number)?.doubleValue
-    }
-    
-    func formatNumber(_ number: Double) -> String? {
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.numberStyle = .decimal
-        
-        return formatter.string(from: NSNumber(value: number))
+    func resetLabelText() {
+        label.text = "0"
     }
 }
-
