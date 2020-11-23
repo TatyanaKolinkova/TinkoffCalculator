@@ -128,7 +128,7 @@ class ViewController: UIViewController {
         calculationHistory.removeAll()
     }
     
-    @IBAction func showSecondViewContrller(_ sender: Any) {
+    @IBAction func showCalculationsList(_ sender: Any) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let calculationsListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
         if let vc = calculationsListVC as? CalculationsListViewController {

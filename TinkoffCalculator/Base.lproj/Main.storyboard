@@ -200,7 +200,7 @@
                                 <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="book.fill" catalog="system"/>
                                 <connections>
-                                    <action selector="showSecondViewContrller:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ln5-oD-Bkg"/>
+                                    <action selector="showCalculationsList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ln5-oD-Bkg"/>
                                 </connections>
                             </button>
                         </subviews>
