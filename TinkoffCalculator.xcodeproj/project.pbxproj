@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		817AF29B256B867A00140338 /* CalculationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817AF29A256B867A00140338 /* CalculationsListViewController.swift */; };
 		F5DC2742256179B300EBC69B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DC2741256179B300EBC69B /* AppDelegate.swift */; };
 		F5DC2744256179B300EBC69B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DC2743256179B300EBC69B /* SceneDelegate.swift */; };
 		F5DC2746256179B300EBC69B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DC2745256179B300EBC69B /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		817AF29A256B867A00140338 /* CalculationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationsListViewController.swift; sourceTree = "<group>"; };
 		F5DC273E256179B300EBC69B /* TinkoffCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5DC2741256179B300EBC69B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F5DC2743256179B300EBC69B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				F5DC274A256179B600EBC69B /* Assets.xcassets */,
 				F5DC274C256179B600EBC69B /* LaunchScreen.storyboard */,
 				F5DC274F256179B600EBC69B /* Info.plist */,
+				817AF29A256B867A00140338 /* CalculationsListViewController.swift */,
 			);
 			path = TinkoffCalculator;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5DC2746256179B300EBC69B /* ViewController.swift in Sources */,
+				817AF29B256B867A00140338 /* CalculationsListViewController.swift in Sources */,
 				F5DC2742256179B300EBC69B /* AppDelegate.swift in Sources */,
 				F5DC2744256179B300EBC69B /* SceneDelegate.swift in Sources */,
 			);

@@ -55,6 +55,11 @@ class ViewController: UIViewController {
         resetLabelText()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     lazy var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         
@@ -121,6 +126,15 @@ class ViewController: UIViewController {
         }
         
         calculationHistory.removeAll()
+    }
+    
+    @IBAction func showSecondViewContrller(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let calculationsListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
+        if let vc = calculationsListVC as? CalculationsListViewController {
+            vc.result = label.text
+        }
+        navigationController?.pushViewController(calculationsListVC, animated: true)
     }
     
     func calculate() throws -> Double {
