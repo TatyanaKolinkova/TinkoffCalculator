@@ -33,6 +33,12 @@ class CalculationsListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.backgroundColor = UIColor.systemGray5
+        let tableHeaderView = UIView()
+        tableHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 30)
+        tableView.tableHeaderView = tableHeaderView
+        tableView.tableFooterView =  UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        
         let nib = UINib.init(nibName: "HistoryTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HistoryTableViewCell")
     }
